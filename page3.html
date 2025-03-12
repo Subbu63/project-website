@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Magic</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      background-color: #4b0082;
+      color: #ffd700;
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    h2 {
+      font-size: 2rem;
+      opacity: 0;
+      animation: sparkle 2s forwards;
+    }
+    p {
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: fadeIn 2s forwards 1s;
+    }
+    @keyframes sparkle {
+      0% { opacity: 0; }
+      50% { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700; }
+      100% { opacity: 1; }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #d46a6a;
+      color: white;
+      border: none;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 2s forwards 2s, sparkleButton 1.5s infinite;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: #ffd700;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 0;
+    }
+    button:hover::after {
+      content: '❤️';
+      font-size: 1.5rem;
+    }
+    @keyframes sparkleButton {
+      0%, 100% { box-shadow: 0 0 5px #ffd700; }
+      50% { box-shadow: 0 0 20px #ffd700; }
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h2>The Magic</h2>
+    <p>You have a way of turning ordinary days into something magical. It’s in the way you laugh, the way you dream, the way you simply exist.</p>
+    <button onclick="window.location.href='page4.html'">Next</button>
+  </div>
+</body>
+</html>

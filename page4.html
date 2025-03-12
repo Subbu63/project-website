@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Future</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      background-color: #87ceeb;
+      color: #ffffff;
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+    h2 {
+      font-size: 2rem;
+      opacity: 0;
+      animation: slideIn 2s forwards;
+    }
+    p {
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: fadeIn 2s forwards 1s;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #d46a6a;
+      color: white;
+      border: none;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 2s forwards 2s, swirl 3s infinite;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: #87ceeb;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 0;
+    }
+    button:hover::after {
+      content: '❤️';
+      font-size: 1.5rem;
+    }
+    @keyframes swirl {
+      0% { transform: rotate(0); }
+      50% { transform: rotate(10deg); }
+      100% { transform: rotate(0); }
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h2>The Future</h2>
+    <p>I don’t know what the future holds, but I know I want you to be a part of it. Every step, every moment, every dream.</p>
+    <button onclick="window.location.href='page5.html'">Next</button>
+  </div>
+</body>
+</html>

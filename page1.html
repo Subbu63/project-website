@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Yosmitha</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3rem;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      color: #d46a6a;
+    }
+    p {
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: fadeIn 2s forwards 1s;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #6a6ad4;
+      color: white;
+      border: none;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 2s forwards 2s, float 3s ease-in-out infinite;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: #d46a6a;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 0;
+    }
+    button:hover::after {
+      content: '❤️';
+      font-size: 1.5rem;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>To Yosmitha</h1>
+    <p>The one who makes moments unforgettable.</p>
+    <button onclick="window.location.href='page2.html'">Next</button>
+  </div>
+</body>
+</html>

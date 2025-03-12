@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Moments</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', serif;
+      background-color: #e0e0e0;
+      color: #6a6ad4;
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    h2 {
+      font-size: 2rem;
+      opacity: 0;
+      animation: typewriter 3s steps(40) forwards;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    p {
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: fadeIn 2s forwards 3s;
+    }
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; opacity: 1; }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #d46a6a;
+      color: white;
+      border: none;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 2s forwards 4s, bounce 1.5s infinite;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background-color: #6a6ad4;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 0;
+    }
+    button:hover::after {
+      content: '❤️';
+      font-size: 1.5rem;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h2>The Moments</h2>
+    <p>From quiet mornings to endless conversations, every moment with you feels like a piece of a bigger story.</p>
+    <button onclick="window.location.href='page3.html'">Next</button>
+  </div>
+</body>
+</html>
