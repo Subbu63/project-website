@@ -4,73 +4,316 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Future</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap');
+    
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Georgia', serif;
-      background-color: #87ceeb;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Lato', sans-serif;
+      background: linear-gradient(135deg, #87ceeb 0%, #7389db 100%), 
+                  radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.2) 100%);
+      background-blend-mode: overlay;
       color: #ffffff;
-      line-height: 1.6;
+      line-height: 1.8;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      opacity: 0;
+      transform: translateZ(0);
+    }
+    
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .star {
+      position: absolute;
+      background-color: #fff;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle 4s infinite;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+    
+    .container {
+      position: relative;
+      z-index: 1;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      padding: 2rem;
       text-align: center;
-      overflow: hidden;
+      max-width: 800px;
+      margin: 0 auto;
     }
+    
     h2 {
-      font-size: 2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(90deg, #ffffff, #e0e0ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       opacity: 0;
-      animation: slideIn 2s forwards;
+      transform: translateY(30px);
+      animation: fadeUp 1.5s ease forwards;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      letter-spacing: 1px;
     }
+    
     p {
-      font-size: 1.2rem;
-      opacity: 0;
-      animation: fadeIn 2s forwards 1s;
-    }
-    @keyframes slideIn {
-      from { transform: translateX(-100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1rem;
-      background-color: #d46a6a;
-      color: white;
-      border: none;
-      cursor: pointer;
-      opacity: 0;
-      animation: fadeIn 2s forwards 2s, swirl 3s infinite;
-      transition: all 0.3s ease;
-    }
-    button:hover {
-      background-color: #87ceeb;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 0;
-    }
-    button:hover::after {
-      content: '❤️';
       font-size: 1.5rem;
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1.5s ease forwards 0.5s;
+      max-width: 600px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
-    @keyframes swirl {
-      0% { transform: rotate(0); }
-      50% { transform: rotate(10deg); }
-      100% { transform: rotate(0); }
+    
+    .button-container {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 1.5s ease forwards 1s;
+    }
+    
+    button {
+      position: relative;
+      padding: 15px 45px;
+      font-size: 1.1rem;
+      font-family: 'Lato', sans-serif;
+      background-color: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(5px);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 50px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s ease-out;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      will-change: transform, background, box-shadow;
+    }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: all 0.5s ease;
+    }
+    
+    button:hover {
+      background-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    button:hover::before {
+      left: 100%;
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    .heart {
+      display: inline-block;
+      margin-left: 8px;
+      animation: pulse 1.5s infinite;
+    }
+    
+    .floating-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    
+    .floating-element {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 15s infinite linear;
+      opacity: 0.5;
+      transition: opacity 0.5s ease;
+    }
+    
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); }
+      100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); }
+    }
+    
+    @keyframes twinkle {
+      0% { opacity: 0; }
+      50% { opacity: 0.8; }
+      100% { opacity: 0; }
+    }
+    
+    @media (max-width: 768px) {
+      h2 { font-size: 2.5rem; }
+      p { font-size: 1.2rem; }
+    }
+    
+    @media (max-width: 480px) {
+      h2 { font-size: 2rem; }
+      p { font-size: 1rem; }
+      button { padding: 12px 35px; }
+    }
+
+    [class*="fade"], [class*="pulse"], [class*="float"] {
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
     }
   </style>
+  <script>
+    function smoothTransition(targetUrl) {
+      const transitionOverlay = document.createElement('div');
+      transitionOverlay.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 10000;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+      `;
+      document.body.appendChild(transitionOverlay);
+
+      requestAnimationFrame(() => {
+        transitionOverlay.style.opacity = '1';
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 600);
+      });
+
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = targetUrl;
+      document.head.appendChild(link);
+    }
+
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.6s ease';
+      requestAnimationFrame(() => {
+        document.body.style.opacity = '1';
+      });
+    });
+  </script>
 </head>
 <body>
-  <div>
+  <div class="stars" id="stars"></div>
+  <div class="floating-elements" id="floating-elements"></div>
+  
+  <div class="container">
     <h2>The Future</h2>
-    <p>I don’t know what the future holds, but I know I want you to be a part of it. Every step, every moment, every dream.</p>
-    <button onclick="window.location.href='page5.html'">Next</button>
+    <p id="typed-text"></p>
+    <div class="button-container">
+      <button onclick="smoothTransition('page5.html')">
+        Next <span class="heart"><i class="fas fa-heart"></i></span>
+      </button>
+    </div>
   </div>
+
+  <script>
+    const starsContainer = document.getElementById('stars');
+    const starCount = window.innerWidth < 768 ? 50 : 100;
+    
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      const size = Math.random() * 3 + 1;
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100;
+      const delay = Math.random() * 4;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.left = `${posX}%`;
+      star.style.top = `${posY}%`;
+      star.style.animationDelay = `${delay}s`;
+      starsContainer.appendChild(star);
+    }
+    
+    const floatingContainer = document.getElementById('floating-elements');
+    const elementCount = window.innerWidth < 768 ? 8 : 15;
+    
+    for (let i = 0; i < elementCount; i++) {
+      const element = document.createElement('div');
+      element.classList.add('floating-element');
+      const size = Math.random() * 100 + 50;
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100 + 100;
+      const duration = Math.random() * 10 + 15;
+      const delay = Math.random() * 10;
+      const hue = Math.random() * 360;
+      element.style.width = `${size}px`;
+      element.style.height = `${size}px`;
+      element.style.left = `${posX}%`;
+      element.style.top = `${posY}%`;
+      element.style.animationDuration = `${duration}s`;
+      element.style.animationDelay = `${delay}s`;
+      element.style.backgroundColor = `hsl(${hue}, 50%, 80%)`;
+      floatingContainer.appendChild(element);
+    }
+    
+    const text = "I don't know what the future holds, but I know I want you to be a part of it. Every step, every moment, every dream.";
+    const pElement = document.getElementById('typed-text');
+    let index = 0;
+    
+    function typeText() {
+      if (index < text.length) {
+        pElement.textContent += text.charAt(index);
+        index++;
+        setTimeout(typeText, 50);
+      }
+    }
+    
+    setTimeout(typeText, 1000);
+  </script>
 </body>
 </html>
