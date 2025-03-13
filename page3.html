@@ -3,73 +3,379 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An enchanting journey through magic">
+  <meta name="theme-color" content="#4a7aff">
   <title>The Magic</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&family=Lora:wght@400;700&display=swap');
+
+    :root {
+      --primary: #0a1128;
+      --secondary: #1a2a5e;
+      --accent: #4a7aff;
+      --light-accent: #7a9fff;
+      --text: #e1e7ff;
+      --shadow: rgba(0, 0, 0, 0.5);
+      --glow: rgba(74, 122, 255, 0.4);
+    }
+
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Georgia', serif;
-      background-color: #4b0082;
-      color: #ffd700;
-      line-height: 1.6;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lora', serif;
+      background: radial-gradient(ellipse at bottom, var(--secondary) 0%, var(--primary) 100%);
+      color: var(--text);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      text-align: center;
+      overflow: hidden;
+      position: relative;
+      opacity: 0;
+      transition: opacity 1.5s ease-in;
     }
+
+    .stars-container {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background-color: #fff;
+      box-shadow: 0 0 6px var(--light-accent);
+      opacity: 0;
+      animation: twinkle var(--duration) infinite ease-in-out;
+    }
+
+    .moon {
+      position: absolute;
+      top: 10%;
+      right: 15%;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #e1e7ff, #bbc5ff);
+      box-shadow: 0 0 30px var(--glow);
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    .moon::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(225, 231, 255, 0.4);
+      box-shadow: 10px 10px 0 rgba(225, 231, 255, 0.2), 
+                  20px -5px 0 rgba(225, 231, 255, 0.3);
+    }
+
+    .aurora {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40vh;
+      background: linear-gradient(to top, 
+        rgba(74, 122, 255, 0.2) 0%, 
+        rgba(74, 122, 255, 0.1) 40%, 
+        rgba(74, 122, 255, 0) 100%);
+      filter: blur(30px);
+      opacity: 0.7;
+      animation: auroraWave 25s infinite alternate ease-in-out;
+      transform-origin: bottom;
+      z-index: 0;
+    }
+
+    @keyframes auroraWave {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(1.2); }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; }
+      50% { opacity: var(--brightness); }
+    }
+
+    .content {
+      background: rgba(10, 17, 40, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 3rem;
+      max-width: 650px;
+      box-shadow: 0 10px 30px var(--shadow);
+      border: 1px solid rgba(74, 122, 255, 0.2);
+      position: relative;
+      z-index: 1;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: slideUp 1.5s forwards 0.5s ease-out;
+    }
+
+    @keyframes slideUp {
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .content:hover {
+      border-color: rgba(74, 122, 255, 0.4);
+    }
+
     h2 {
-      font-size: 2rem;
-      opacity: 0;
-      animation: sparkle 2s forwards;
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      margin-bottom: 2rem;
+      font-weight: 700;
+      text-align: center;
+      background: linear-gradient(to right, var(--text) 0%, var(--light-accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
     }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 3px;
+      background: var(--accent);
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 3px;
+    }
+
     p {
-      font-size: 1.2rem;
+      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+      line-height: 1.8;
+      text-align: center;
+      margin: 2rem 0;
+      color: var(--text);
       opacity: 0;
-      animation: fadeIn 2s forwards 1s;
+      animation: fadeIn 1.5s forwards 1.2s;
     }
-    @keyframes sparkle {
-      0% { opacity: 0; }
-      50% { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700; }
-      100% { opacity: 1; }
-    }
+
     @keyframes fadeIn {
       to { opacity: 1; }
     }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+
     button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1rem;
-      background-color: #d46a6a;
-      color: white;
-      border: none;
+      background: transparent;
+      color: var(--light-accent);
+      border: 2px solid var(--accent);
+      border-radius: 30px;
+      padding: 1rem 2.5rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 1px;
       cursor: pointer;
-      opacity: 0;
-      animation: fadeIn 2s forwards 2s, sparkleButton 1.5s infinite;
+      position: relative;
+      overflow: hidden;
       transition: all 0.3s ease;
+      opacity: 0;
+      animation: fadeIn 1.5s forwards 1.5s;
+      z-index: 2;
     }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      z-index: -1;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s ease;
+    }
+
     button:hover {
-      background-color: #ffd700;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 0;
+      color: var(--text);
+      box-shadow: 0 0 15px var(--glow);
     }
-    button:hover::after {
-      content: '❤️';
-      font-size: 1.5rem;
+
+    button:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
     }
-    @keyframes sparkleButton {
-      0%, 100% { box-shadow: 0 0 5px #ffd700; }
-      50% { box-shadow: 0 0 20px #ffd700; }
+
+    button i {
+      margin-left: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    button:hover i {
+      transform: translateX(5px);
+    }
+
+    .shooting-star {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(to right, transparent, #fff, transparent);
+      animation: shootingStar var(--duration) linear forwards;
+      transform: rotate(var(--angle));
+      z-index: 0;
+      opacity: 0;
+    }
+
+    @keyframes shootingStar {
+      0% { transform: translateX(-100px) rotate(var(--angle)); opacity: 1; }
+      70% { opacity: 1; }
+      100% { transform: translateX(calc(100vw + 200px)) rotate(var(--angle)); opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+      .content { padding: 2rem; max-width: 85%; }
+      .moon { width: 50px; height: 50px; top: 5%; right: 10%; }
+    }
+
+    @media (max-width: 480px) {
+      .content { padding: 1.5rem; max-width: 90%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
-  <div>
+  <div class="stars-container" id="stars"></div>
+  <div class="moon"></div>
+  <div class="aurora"></div>
+  <div class="content">
     <h2>The Magic</h2>
-    <p>You have a way of turning ordinary days into something magical. It’s in the way you laugh, the way you dream, the way you simply exist.</p>
-    <button onclick="window.location.href='page4.html'">Next</button>
+    <p>You have a way of turning ordinary days into something magical. It's in the way you laugh, the way you dream, the way you simply exist.</p>
+    <div class="button-container">
+      <button id="continueButton">
+        Continue the Journey <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
   </div>
+
+  <script>
+    class CelestialExperience {
+      constructor() {
+        this.starsContainer = document.getElementById('stars');
+        this.button = document.getElementById('continueButton');
+        this.init();
+      }
+
+      init() {
+        this.createStars();
+        this.createShootingStars();
+        this.setupEventListeners();
+        document.body.style.opacity = '1';
+      }
+
+      createStars() {
+        const starCount = window.innerWidth < 768 ? 100 : 200;
+        for (let i = 0; i < starCount; i++) {
+          const star = document.createElement('div');
+          star.className = 'star';
+          const size = Math.random() * 2.5 + 0.5;
+          const posX = Math.random() * 100;
+          const posY = Math.random() * 100;
+          const duration = Math.random() * 4 + 2;
+          const delay = Math.random() * 5;
+          const brightness = Math.random() * 0.5 + 0.3;
+          
+          star.style.cssText = `
+            width: ${size}px;
+            height: ${size}px;
+            left: ${posX}%;
+            top: ${posY}%;
+            --duration: ${duration}s;
+            --brightness: ${brightness};
+            animation-delay: ${delay}s;
+          `;
+          this.starsContainer.appendChild(star);
+        }
+      }
+
+      createShootingStars() {
+        setInterval(() => {
+          if (Math.random() > 0.8) {
+            const shootingStar = document.createElement('div');
+            shootingStar.className = 'shooting-star';
+            const posY = Math.random() * 30 + 5;
+            const length = Math.random() * 100 + 50;
+            const angle = Math.random() * 20 - 10;
+            const duration = Math.random() * 2 + 1;
+            
+            shootingStar.style.cssText = `
+              top: ${posY}%;
+              left: 0;
+              width: ${length}px;
+              --duration: ${duration}s;
+              --angle: ${angle}deg;
+            `;
+            
+            this.starsContainer.appendChild(shootingStar);
+            
+            setTimeout(() => {
+              this.starsContainer.removeChild(shootingStar);
+            }, duration * 1000);
+          }
+        }, 2000);
+      }
+
+      setupEventListeners() {
+        this.button.addEventListener('click', () => {
+          window.location.href = 'page4.html';
+        });
+        
+        this.button.addEventListener('mouseover', () => {
+          this.createButtonGlow();
+        });
+      }
+
+      createButtonGlow() {
+        const glow = document.createElement('div');
+        glow.style.cssText = `
+          position: absolute;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(74, 122, 255, 0.7) 0%, transparent 70%);
+          filter: blur(10px);
+          opacity: 0.7;
+          transition: all 0.3s ease;
+          z-index: -1;
+        `;
+        this.button.appendChild(glow);
+        
+        setTimeout(() => {
+          glow.style.opacity = '0';
+          setTimeout(() => {
+            this.button.removeChild(glow);
+          }, 300);
+        }, 500);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      new CelestialExperience();
+    });
+  </script>
 </body>
 </html>
