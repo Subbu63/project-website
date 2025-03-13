@@ -4,68 +4,303 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>For Yosmitha</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300&family=Dancing+Script:wght@400&display=swap');
+
+    :root {
+      --primary-color: #d46a6a;
+      --secondary-color: #6a6ad4;
+      --text-color: #333;
+      --light-color: #f9f9f9;
+      --accent-color: #ffd1dc;
+    }
+
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Georgia', serif;
-      background-color: #f9f9f9;
-      color: #333;
-      line-height: 1.6;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(45deg, var(--light-color), var(--accent-color));
+      background-size: 200% 200%;
+      animation: gradientShift 15s ease infinite;
+      color: var(--text-color);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateZ(0);
+    }
+
+    .bg-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(var(--primary-color) 2px, transparent 2px);
+      background-size: 40px 40px;
+      opacity: 0.2;
+      animation: pulse 10s infinite ease-in-out;
+      z-index: -1;
+    }
+
+    .container {
+      max-width: 800px;
+      padding: 3rem;
       text-align: center;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      position: relative;
+      z-index: 1;
+      animation: slideUp 1.5s ease forwards;
     }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+
     h1 {
-      font-size: 3rem;
-      opacity: 0;
-      animation: fadeIn 2s forwards;
-      color: #d46a6a;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      color: var(--primary-color);
+      margin-bottom: 2rem;
+      animation: fadeInDown 1.5s ease forwards 0.5s;
     }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: var(--primary-color);
+      animation: expandWidth 1.5s ease forwards 1.8s;
+    }
+
     p {
-      font-size: 1.2rem;
-      opacity: 0;
-      animation: fadeIn 2s forwards 1s;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      margin-bottom: 2.5rem;
+      animation: fadeInUp 1.5s ease forwards 1.2s;
     }
-    @keyframes fadeIn {
+
+    .btn {
+      padding: 0.8rem 2rem;
+      font-size: 1.1rem;
+      color: white;
+      background-color: var(--secondary-color);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease-out;
+      animation: fadeInUp 1.5s ease forwards 1.8s, float 3s ease-in-out infinite 3s;
+      will-change: transform, background, box-shadow;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-color);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(212, 106, 106, 0.4);
+    }
+
+    .btn.heart-mode::after {
+      content: '❤️';
+      font-size: 1.8rem;
+    }
+
+    .floating-elements {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .floating-element {
+      position: absolute;
+      color: var(--primary-color);
+      opacity: 0.3;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      animation: floatElement 15s linear infinite alternate;
+    }
+
+    .floating-element:hover {
+      opacity: 1;
+      transform: scale(1.5);
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 0%; }
+      50% { background-position: 100% 100%; }
+      100% { background-position: 0% 0%; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.4; }
+    }
+
+    @keyframes slideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInDown {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes expandWidth {
       to { opacity: 1; }
     }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1rem;
-      background-color: #6a6ad4;
-      color: white;
-      border: none;
-      cursor: pointer;
-      opacity: 0;
-      animation: fadeIn 2s forwards 2s, float 3s ease-in-out infinite;
-      transition: all 0.3s ease;
+
+    @keyframes floatElement {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(var(--translateX), var(--translateY)) rotate(var(--rotate)); }
     }
-    button:hover {
-      background-color: #d46a6a;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 0;
+
+    @media (max-width: 768px) {
+      .container { padding: 2rem; margin: 1rem; }
+      h1 { font-size: 3rem; }
+      p { font-size: 1.4rem; }
     }
-    button:hover::after {
-      content: '❤️';
-      font-size: 1.5rem;
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2.5rem; }
+      p { font-size: 1.2rem; }
+      .btn { font-size: 0.9rem; }
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+
+    [class*="fade"], [class*="pulse"], [class*="float"] {
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
     }
   </style>
+  <script>
+    function smoothTransition(targetUrl) {
+      const transitionOverlay = document.createElement('div');
+      transitionOverlay.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 10000;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+      `;
+      document.body.appendChild(transitionOverlay);
+
+      requestAnimationFrame(() => {
+        transitionOverlay.style.opacity = '1';
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 600);
+      });
+
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = targetUrl;
+      document.head.appendChild(link);
+    }
+
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.6s ease';
+      requestAnimationFrame(() => {
+        document.body.style.opacity = '1';
+      });
+    });
+  </script>
 </head>
 <body>
-  <div>
+  <div class="bg-pattern"></div>
+  <div class="floating-elements" id="floatingElements"></div>
+
+  <div class="container">
     <h1>To Yosmitha</h1>
-    <p>The one who makes moments unforgettable.</p>
-    <button onclick="window.location.href='page2.html'">Next</button>
+    <p id="message">The one who makes moments unforgettable.</p>
+    <button class="btn" id="nextBtn" aria-label="Reveal more of the journey">Continue the Journey</button>
   </div>
+
+  <script>
+    const floatingElements = document.getElementById('floatingElements');
+    const symbols = ['♥', '✨', '♪', '✿'];
+    const messages = [
+      'Your smile lights up my world',
+      'Every moment with you is magic',
+      'You’re my favorite melody',
+      'Forever grateful for you'
+    ];
+    const numElements = window.innerWidth < 768 ? 5 : 10;
+
+    for (let i = 0; i < numElements; i++) {
+      const element = document.createElement('div');
+      element.classList.add('floating-element');
+      element.textContent = symbols[i % symbols.length];
+      element.style.left = `${Math.random() * 100}%`;
+      element.style.top = `${Math.random() * 100}%`;
+      element.style.setProperty('--translateX', `${(Math.random() * 150) - 75}px`);
+      element.style.setProperty('--translateY', `${(Math.random() * 150) - 75}px`);
+      element.style.setProperty('--rotate', `${Math.random() * 360}deg`);
+      element.addEventListener('click', () => {
+        alert(messages[i % messages.length]);
+      });
+      floatingElements.appendChild(element);
+    }
+
+    const nextBtn = document.getElementById('nextBtn');
+    const message = document.getElementById('message');
+    let stage = 0;
+
+    nextBtn.addEventListener('click', debounce(() => {
+      if (stage === 0) {
+        message.style.opacity = '0';
+        setTimeout(() => {
+          message.textContent = 'Here’s to more adventures together!';
+          message.style.opacity = '1';
+          nextBtn.textContent = 'One More';
+        }, 500);
+        stage++;
+      } else if (stage === 1) {
+        document.body.style.transition = 'opacity 0.6s ease';
+        document.body.style.opacity = '0';
+        setTimeout(() => smoothTransition('page2.html'), 600);
+      }
+    }, 200));
+  </script>
 </body>
 </html>
