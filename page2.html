@@ -4,73 +4,324 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Moments</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400&display=swap');
+    
+    :root {
+      --primary-color: #6a6ad4;
+      --accent-color: #d46a6a;
+      --light-color: #f5f5f5;
+      --dark-color: #333;
+    }
+    
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Georgia', serif;
-      background-color: #e0e0e0;
-      color: #6a6ad4;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: linear-gradient(135deg, #e0e5ff 0%, #f5e0e0 100%);
+      color: var(--dark-color);
       line-height: 1.6;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.5;
+      animation: float 15s infinite linear;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.5;
+      }
+      90% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       text-align: center;
+      z-index: 1;
+      position: relative;
     }
+    
+    .content {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transform: translateY(50px);
+      opacity: 0;
+      animation: slideUp 1.5s ease forwards;
+    }
+    
     h2 {
-      font-size: 2rem;
-      opacity: 0;
-      animation: typewriter 3s steps(40) forwards;
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      font-weight: 700;
+      position: relative;
       overflow: hidden;
-      white-space: nowrap;
+      display: inline-block;
     }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
     p {
-      font-size: 1.2rem;
+      font-size: 1.8rem;
+      max-width: 600px;
+      margin: 30px auto;
+      color: #555;
+      font-weight: 300;
+      line-height: 1.8;
       opacity: 0;
-      animation: fadeIn 2s forwards 3s;
+      animation: fadeIn 2s forwards 1s;
     }
-    @keyframes typewriter {
-      from { width: 0; }
-      to { width: 100%; opacity: 1; }
+    
+    .highlight {
+      color: var(--accent-color);
+      font-style: italic;
     }
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    
+    .button-container {
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeIn 2s forwards 2s;
     }
+    
     button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1rem;
-      background-color: #d46a6a;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      font-family: 'Cormorant Garamond', serif;
+      background: var(--accent-color);
       color: white;
       border: none;
       cursor: pointer;
+      border-radius: 50px;
+      transition: all 0.5s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      box-shadow: 0 5px 15px rgba(212, 106, 106, 0.4);
+    }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: all 0.5s ease;
+    }
+    
+    button:hover::before {
+      left: 100%;
+    }
+    
+    button:hover {
+      background: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(106, 106, 212, 0.4);
+    }
+    
+    .button-text {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .button-icon {
       opacity: 0;
-      animation: fadeIn 2s forwards 4s, bounce 1.5s infinite;
+      margin-left: 0;
       transition: all 0.3s ease;
     }
-    button:hover {
-      background-color: #6a6ad4;
+    
+    button:hover .button-text {
+      letter-spacing: 1px;
+    }
+    
+    button:hover .button-icon {
+      opacity: 1;
+      margin-left: 10px;
+    }
+    
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    
+    .circle {
+      position: absolute;
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 0;
+      filter: blur(50px);
+      z-index: -1;
     }
-    button:hover::after {
-      content: '❤️';
-      font-size: 1.5rem;
+    
+    .circle-1 {
+      width: 300px;
+      height: 300px;
+      background-color: rgba(106, 106, 212, 0.3);
+      top: -150px;
+      right: -150px;
+      animation: pulse 8s infinite alternate;
     }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    
+    .circle-2 {
+      width: 400px;
+      height: 400px;
+      background-color: rgba(212, 106, 106, 0.2);
+      bottom: -200px;
+      left: -200px;
+      animation: pulse 10s infinite alternate-reverse;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.2); }
     }
   </style>
 </head>
 <body>
-  <div>
-    <h2>The Moments</h2>
-    <p>From quiet mornings to endless conversations, every moment with you feels like a piece of a bigger story.</p>
-    <button onclick="window.location.href='page3.html'">Next</button>
+  <div class="particles" id="particles"></div>
+  
+  <div class="circle circle-1"></div>
+  <div class="circle circle-2"></div>
+  
+  <div class="container">
+    <div class="content">
+      <h2>The Moments</h2>
+      <p>From <span class="highlight">quiet mornings</span> to <span class="highlight">endless conversations</span>, every moment with you feels like a piece of a bigger story.</p>
+      <div class="button-container">
+        <button onclick="window.location.href='page3.html'">
+          <span class="button-text">
+            Continue Our Journey
+            <span class="button-icon"><i class="fas fa-heart"></i></span>
+          </span>
+        </button>
+      </div>
+    </div>
   </div>
+
+  <script>
+    // Create floating particles
+    document.addEventListener('DOMContentLoaded', function() {
+      const particlesContainer = document.getElementById('particles');
+      const colors = ['rgba(106, 106, 212, 0.3)', 'rgba(212, 106, 106, 0.3)', 'rgba(255, 255, 255, 0.5)'];
+      const shapes = ['circle', 'heart'];
+      
+      for (let i = 0; i < 30; i++) {
+        createParticle(particlesContainer, colors, shapes);
+      }
+    });
+    
+    function createParticle(container, colors, shapes) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      
+      // Random properties
+      const size = Math.random() * 30 + 10;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const shape = shapes[Math.floor(Math.random() * shapes.length)];
+      
+      // Position
+      const left = Math.random() * 100;
+      const top = Math.random() * 100;
+      
+      // Style
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.backgroundColor = color;
+      particle.style.left = `${left}%`;
+      particle.style.bottom = '-50px';
+      
+      // Heart shape if needed
+      if (shape === 'heart') {
+        particle.style.backgroundColor = 'transparent';
+        particle.style.boxShadow = 'none';
+        particle.innerHTML = '<i class="fas fa-heart" style="font-size: ' + size + 'px; color: ' + color + '"></i>';
+      }
+      
+      // Animation
+      const duration = Math.random() * 15 + 10;
+      const delay = Math.random() * 5;
+      particle.style.animation = `float ${duration}s infinite linear ${delay}s`;
+      
+      container.appendChild(particle);
+    }
+    
+    // Subtle mouse parallax effect
+    document.addEventListener('mousemove', function(e) {
+      const xPos = (e.clientX / window.innerWidth) - 0.5;
+      const yPos = (e.clientY / window.innerHeight) - 0.5;
+      
+      const content = document.querySelector('.content');
+      content.style.transform = `translateX(${xPos * 20}px) translateY(${yPos * 20}px)`;
+      
+      const circles = document.querySelectorAll('.circle');
+      circles.forEach(circle => {
+        const speed = circle.classList.contains('circle-1') ? 30 : 20;
+        circle.style.transform = `translateX(${xPos * speed}px) translateY(${yPos * speed}px) scale(${circle.classList.contains('circle-1') ? 1 + yPos/10 : 1 - yPos/10})`;
+      });
+    });
+  </script>
 </body>
 </html>
