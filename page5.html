@@ -3,131 +3,579 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>For You</title>
+  <meta name="description" content="A special dedication for Yosmitha">
+  <meta name="theme-color" content="#f8c8dc">
+  <title>For Yosmitha</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Dancing+Script:wght@400;700&display=swap');
+    
+    :root {
+      --primary-color: #f8c8dc;
+      --secondary-color: #ffb7c5;
+      --text-color: #fff;
+      --dark-accent: #5e4c5a;
+      --light-accent: #f5f5f5;
+      --glow-color: rgba(248, 200, 220, 0.3);
+      --shadow-color: rgba(0, 0, 0, 0.5);
+      --nebula-color: rgba(248, 200, 220, 0.1);
+    }
+    
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Georgia', serif;
-      background-color: #800020; /* Solid background color */
-      color: #ffc0cb;
-      line-height: 1.6;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
+      box-sizing: border-box;
+      will-change: transform, opacity;
+    }
+    
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: #000 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="black"/><circle cx="20" cy="20" r="2" fill="white" opacity="0.8"/><circle cx="80" cy="30" r="1" fill="white" opacity="0.6"/><circle cx="50" cy="70" r="1.5" fill="white" opacity="0.7"/><circle cx="30" cy="50" r="1" fill="white" opacity="0.5"/></svg>') repeat;
+      color: var(--text-color);
+      min-height: 100vh;
       overflow: hidden;
       position: relative;
+      overscroll-behavior: none;
+      opacity: 0;
+      transform: translateZ(0);
     }
-
-    body::before {
-      content: '';
+    
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: grid;
+      place-items: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease;
+    }
+    
+    #preloader .heart-spinner {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      filter: drop-shadow(0 0 10px var(--glow-color));
+      animation: pulse 1s infinite, spin 2s infinite linear;
+    }
+    
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      mix-blend-mode: screen;
+    }
+    
+    .parallax-container {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.4);
+      inset: 0;
       z-index: 1;
-      pointer-events: none;
+      perspective: 1000px;
     }
-
-    .content {
+    
+    .parallax-layer {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease-out;
+    }
+    
+    .galaxy {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--nebula-color) 0%, transparent 70%);
+      filter: blur(20px) saturate(130%);
+      animation: galaxyFloat 25s infinite ease-in-out;
+      will-change: transform;
+    }
+    
+    .content-wrapper {
       position: relative;
       z-index: 2;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.9) 70%);
     }
-
-    p {
-      font-size: 1.5rem;
+    
+    .card {
+      position: relative;
+      width: 90%;
+      max-width: 650px;
+      padding: 3.5rem;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(12px) saturate(150%);
+      border-radius: 25px;
+      box-shadow: 0 20px 40px var(--shadow-color);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transform: perspective(1000px) translateZ(-20px);
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .card:hover {
+      transform: perspective(1000px) translateZ(0) translateY(-15px);
+      box-shadow: 0 30px 60px var(--shadow-color);
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.15), transparent);
       opacity: 0;
-      animation: fadeInUp 2s forwards;
-      margin-bottom: 20px;
+      transition: opacity 0.3s ease;
     }
-
-    .heart {
-      font-size: 2.5rem;
-      color: #ffc0cb;
-      cursor: pointer;
-      animation: pulse 2s infinite, float 3s ease-in-out infinite;
-      margin-top: 20px;
+    
+    .card:hover::before {
+      opacity: 1;
+      animation: shimmer 4s infinite;
+    }
+    
+    .title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      margin-bottom: 2rem;
+      color: var(--primary-color);
+      text-shadow: 0 3px 15px var(--glow-color);
+      animation: fadeInDown 1.8s ease-out forwards;
+    }
+    
+    .title span {
+      display: inline-block;
       transition: transform 0.3s ease;
     }
-
-    .heart:hover {
-      transform: scale(1.2);
+    
+    .title:hover span {
+      transform: translateY(-5px);
     }
-
-    .hidden-message {
-      display: none;
-      margin-top: 20px;
-      font-size: 1.8rem;
-      color: #fff;
-      opacity: 0;
-      animation: slideIn 1s forwards;
+    
+    .message {
+      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+      animation: fadeIn 2.2s ease-out forwards 0.5s;
     }
-
-    .restart-button {
-      margin-top: 30px;
-      padding: 10px 20px;
-      font-size: 1rem;
-      background-color: #d46a6a;
-      color: white;
-      border: none;
+    
+    .heart-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 2.5rem auto;
+      animation: fadeIn 2.5s ease-out forwards 1s;
+      perspective: 1000px;
+    }
+    
+    .heart {
+      width: 100%;
+      height: 100%;
       cursor: pointer;
+      transform-style: preserve-3d;
+      animation: pulse 2s infinite, float 4s ease-in-out infinite;
+    }
+    
+    .heart svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--primary-color);
+      filter: drop-shadow(0 0 15px var(--glow-color));
+      transition: transform 0.3s ease;
+    }
+    
+    .heart:hover svg {
+      transform: scale(1.15) rotate(5deg);
+    }
+    
+    .hidden-message {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      color: var(--secondary-color);
+      text-shadow: 0 3px 12px rgba(255, 183, 197, 0.5);
       opacity: 0;
-      animation: fadeInUp 2s forwards 2s, bounce 1.5s infinite;
-      transition: all 0.3s ease;
-      border-radius: 5px;
+      max-height: 0;
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-
+    
+    .hidden-message.revealed {
+      opacity: 1;
+      max-height: 150px;
+      margin: 2rem 0;
+    }
+    
+    .poem {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--light-accent);
+      font-style: italic;
+      opacity: 0;
+      max-height: 0;
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .poem.revealed {
+      opacity: 1;
+      max-height: 150px;
+      margin-bottom: 2rem;
+    }
+    
+    .restart-button {
+      margin-top: 2.5rem;
+      padding: 1rem 2.5rem;
+      font-size: 1.2rem;
+      background: linear-gradient(45deg, transparent, rgba(248, 200, 220, 0.2));
+      color: var(--text-color);
+      border: 1px solid var(--primary-color);
+      border-radius: 50px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease-out;
+      animation: fadeInUp 2.5s ease-out forwards 1.5s;
+      will-change: transform, background, box-shadow;
+    }
+    
     .restart-button:hover {
-      background-color: #6a6ad4;
-      transform: scale(1.1);
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      color: var(--dark-accent);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px var(--shadow-color);
     }
-
+    
+    .floating-elements {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      mix-blend-mode: screen;
+    }
+    
+    .floating-element {
+      position: absolute;
+      opacity: 0.7;
+      transition: all 1.5s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
+    
     @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+      0%, 100% { transform: scale(1) rotateY(0deg); }
+      50% { transform: scale(1.08) rotateY(10deg); }
     }
-
+    
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      0%, 100% { transform: translateY(0) rotateZ(0deg); }
+      50% { transform: translateY(-20px) rotateZ(5deg); }
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) skewX(-30deg); }
+      100% { transform: translateX(100%) skewX(-30deg); }
+    }
+    
+    @keyframes galaxyFloat {
+      0% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(15deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @media (max-width: 768px) {
+      .card { padding: 2.5rem; }
+      .heart-container { width: 100px; height: 100px; }
+    }
+    
+    @media (max-width: 480px) {
+      .card { padding: 2rem; }
+      .heart-container { width: 80px; height: 80px; }
+      .restart-button { padding: 0.8rem 2rem; }
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
     }
 
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    [class*="fade"], [class*="pulse"], [class*="float"] {
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
     }
   </style>
+  <script>
+    function smoothTransition(targetUrl) {
+      const transitionOverlay = document.createElement('div');
+      transitionOverlay.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 10000;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+      `;
+      document.body.appendChild(transitionOverlay);
+
+      requestAnimationFrame(() => {
+        transitionOverlay.style.opacity = '1';
+        setTimeout(() => {
+          window.location.href = targetUrl;
+        }, 600);
+      });
+
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = targetUrl;
+      document.head.appendChild(link);
+    }
+
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.6s ease';
+      requestAnimationFrame(() => {
+        document.body.style.opacity = '1';
+      });
+    });
+  </script>
 </head>
 <body>
-  <div class="content">
-    <p>This is for you, Yosmitha. For all that you are, and all that you inspire.</p>
-    <div class="heart" onclick="revealMessage()">❤️</div>
-    <p id="hidden-message" class="hidden-message">This one's to remind you that you are always the Princess :)</p>
-    <button class="restart-button" onclick="window.location.href='index.html'">Restart</button>
+  <div id="preloader">
+    <i class="fas fa-heart heart-spinner"></i>
+  </div>
+
+  <div id="stars" class="stars"></div>
+  
+  <div class="parallax-container">
+    <div class="parallax-layer" data-depth="0.2"></div>
+    <div class="parallax-layer" data-depth="0.5"></div>
+    <div class="parallax-layer" data-depth="0.8"></div>
+  </div>
+  
+  <div class="floating-elements" id="floatingElements"></div>
+  
+  <div class="content-wrapper">
+    <div class="card">
+      <h1 class="title">
+        <span>F</span><span>o</span><span>r</span> <span>Y</span><span>o</span><span>s</span><span>m</span><span>i</span><span>t</span><span>h</span><span>a</span>
+      </h1>
+      <p class="message">For you, Yosmitha - a soul that shines brighter than the stars, bringing warmth and wonder to every moment we share.</p>
+      
+      <div class="heart-container">
+        <div class="heart" id="heart">
+          <svg viewBox="0 0 512 512">
+            <path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path>
+          </svg>
+        </div>
+      </div>
+      
+      <div id="hiddenMessage" class="hidden-message"></div>
+      <div id="poem" class="poem">"Through cosmic dance and starlit skies, your gentle grace forever flies."</div>
+      
+      <button class="restart-button" id="restartButton">Begin Anew</button>
+    </div>
   </div>
 
   <script>
-    function revealMessage() {
-      const hiddenMessage = document.getElementById('hidden-message');
-      hiddenMessage.style.display = 'block';
-      hiddenMessage.classList.remove('hidden-message');
-      void hiddenMessage.offsetWidth;
-      hiddenMessage.classList.add('hidden-message');
+    class CosmicExperience {
+      constructor() {
+        this.clickCount = 0;
+        this.messages = ["I cherish you beyond the stars."];
+        this.elements = {
+          preloader: document.getElementById('preloader'),
+          heart: document.getElementById('heart'),
+          hiddenMessage: document.getElementById('hiddenMessage'),
+          poem: document.getElementById('poem'),
+          restartButton: document.getElementById('restartButton'),
+          floatingElements: document.getElementById('floatingElements')
+        };
+        this.init();
+      }
+
+      init() {
+        this.setupEventListeners();
+        this.preload();
+        this.createStars();
+        this.createGalaxies();
+      }
+
+      setupEventListeners() {
+        window.addEventListener('load', () => {
+          this.elements.preloader.style.opacity = '0';
+          setTimeout(() => this.elements.preloader.remove(), 800);
+        });
+
+        const handleParallax = (e) => {
+          const x = e.clientX || (e.touches && e.touches[0].clientX);
+          const y = e.clientY || (e.touches && e.touches[0].clientY);
+          if (x && y) {
+            requestAnimationFrame(() => this.parallaxEffect(x, y));
+          }
+        };
+
+        document.addEventListener('mousemove', handleParallax);
+        document.addEventListener('touchmove', handleParallax);
+        
+        this.elements.heart.addEventListener('click', debounce(() => this.revealMessage(), 200));
+        this.elements.heart.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          this.revealMessage();
+        });
+        
+        this.elements.restartButton.addEventListener('click', debounce(() => this.restartAnimation(), 200));
+        
+        const throttledTrail = debounce((e) => this.createTrail(e), 50);
+        document.addEventListener('mousemove', throttledTrail);
+      }
+
+      preload() {
+        const assets = [
+          'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+          'https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js'
+        ];
+        assets.forEach(src => {
+          const link = document.createElement(src.includes('css') ? 'link' : 'script');
+          link[src.includes('css') ? 'href' : 'src'] = src;
+          if (src.includes('css')) link.rel = 'stylesheet';
+          document.head.appendChild(link);
+        });
+      }
+
+      parallaxEffect(x, y) {
+        const layers = document.querySelectorAll('.parallax-layer');
+        layers.forEach(layer => {
+          const depth = parseFloat(layer.getAttribute('data-depth'));
+          const moveX = (window.innerWidth / 2 - x) * depth * 0.05;
+          const moveY = (window.innerHeight / 2 - y) * depth * 0.05;
+          layer.style.transform = `translate3d(${moveX}px, ${moveY}px, ${depth * 100}px)`;
+        });
+      }
+
+      createStars() {
+        particlesJS('stars', {
+          particles: {
+            number: { value: window.innerWidth < 768 ? 80 : 120 },
+            color: { value: ['#fff', '#f8c8dc', '#ffb7c5'] },
+            shape: { type: ['star', 'circle'] },
+            opacity: { value: 0.7, random: true, anim: { enable: true, speed: 0.8 } },
+            size: { value: 2.5, random: true },
+            move: { speed: 0.3, direction: 'none', random: true }
+          },
+          interactivity: {
+            events: {
+              onhover: { enable: true, mode: 'repulse' },
+              onclick: { enable: true, mode: 'push' }
+            }
+          }
+        });
+      }
+
+      createGalaxies() {
+        const layers = document.querySelectorAll('.parallax-layer');
+        layers.forEach((layer, index) => {
+          const count = 3 - index;
+          for (let i = 0; i < count; i++) {
+            const galaxy = document.createElement('div');
+            galaxy.className = 'galaxy';
+            const size = 250 + (2 - index) * 200 + Math.random() * 150;
+            galaxy.style.cssText = `
+              left: ${Math.random() * 100}%;
+              top: ${Math.random() * 100}%;
+              width: ${size}px;
+              height: ${size}px;
+              opacity: ${0.15 + Math.random() * 0.25};
+              animation-delay: ${Math.random() * 5}s;
+            `;
+            layer.appendChild(galaxy);
+          }
+        });
+      }
+
+      revealMessage() {
+        if (this.clickCount < this.messages.length) {
+          this.elements.hiddenMessage.textContent = this.messages[this.clickCount];
+          this.elements.hiddenMessage.classList.add('revealed');
+          if (this.clickCount === this.messages.length - 1) {
+            this.elements.poem.classList.add('revealed');
+          }
+          this.clickCount++;
+          this.createHeartBurst();
+        }
+      }
+
+      createHeartBurst() {
+        const rect = this.elements.heart.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        for (let i = 0; i < 20; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'floating-element';
+          const heart = document.createElement('i');
+          heart.className = 'fas fa-heart';
+          heart.style.cssText = `
+            color: var(--primary-color);
+            font-size: ${12 + Math.random() * 15}px;
+            filter: drop-shadow(0 0 5px var(--glow-color));
+          `;
+          
+          const angle = Math.random() * Math.PI * 2;
+          const distance = 80 + Math.random() * 120;
+          const duration = 1.5 + Math.random();
+          
+          particle.appendChild(heart);
+          particle.style.left = `${centerX}px`;
+          particle.style.top = `${centerY}px`;
+          this.elements.floatingElements.appendChild(particle);
+          
+          requestAnimationFrame(() => {
+            particle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) rotate(${Math.random() * 360}deg)`;
+            particle.style.transition = `all ${duration}s ease-out, opacity ${duration/2}s ease-out`;
+            particle.style.opacity = '0';
+            setTimeout(() => particle.remove(), duration * 1000);
+          });
+        }
+      }
+
+      createTrail(e) {
+        if (Math.random() > 0.95) {
+          const trail = document.createElement('div');
+          trail.className = 'floating-element';
+          trail.innerHTML = `<i class="fas fa-heart" style="font-size: 12px; color: var(--primary-color); filter: drop-shadow(0 0 3px var(--glow-color));"></i>`;
+          trail.style.left = `${e.pageX}px`;
+          trail.style.top = `${e.pageY}px`;
+          this.elements.floatingElements.appendChild(trail);
+          setTimeout(() => trail.remove(), 1200);
+        }
+      }
+
+      restartAnimation() {
+        smoothTransition('index.html');
+      }
     }
+
+    document.addEventListener('DOMContentLoaded', () => new CosmicExperience());
   </script>
 </body>
 </html>
